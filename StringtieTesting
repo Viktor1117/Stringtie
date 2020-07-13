@@ -2,14 +2,16 @@
 Bootstrap: docker
 From: ubuntu:20.04
 
-#För att programmet ska hittas i miljön
+%environment
 SHELL=/bin/bash
 PATH=/opt/anaconda/bin:${PATH}
 LC_ALL=C.UTF-8
 
+%runscript
     echo "This is what happens when you run the container..."
     export PATH=/opt/anaconda/bin:${PATH}    
-    
+
+%post
     echo "Hello from inside the container"
     apt-get update
     apt-get -y install wget git bzip2 build-essential gcc zlib1g-dev language-pack-en-base apt-transport-https make cmake unzip python3
@@ -24,8 +26,5 @@ LC_ALL=C.UTF-8
     conda config --add channels defaults
     conda config --add channels conda-forge
     conda config --add channels bioconda
-
-conda install -c bioconda stringtie
-
-
  
+conda install -c bioconda stringtie
